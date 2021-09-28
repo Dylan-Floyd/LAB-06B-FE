@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+.car-div {
+  border: 1px solid black;
+  margin: 10px auto;
+  padding: 10px;
+  display: inline-block;
+}
+
+.car-list-div {
+  display: flex;
+  flex-direction: column;
+}
