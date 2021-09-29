@@ -11,7 +11,7 @@ export default class CarList extends Component {
     }
 
     componentDidMount = () => {
-        fetch('https://dylan-f2-06a.herokuapp.com/cars')
+        fetch('https://lab-06b-be-dylan.herokuapp.com/cars/')
             .then(response => response.json())
             .then(json => this.setState({ cars: json }))
             .catch(e => console.log(e));

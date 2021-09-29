@@ -12,7 +12,7 @@ export default class CarDetails extends Component {
     }
 
     componentDidMount = () => {
-        fetch('https://dylan-f2-06a.herokuapp.com/cars/'+this.props.match.params.id)
+        fetch('https://lab-06b-be-dylan.herokuapp.com/cars/'+this.props.match.params.id)
             .then(response => response.json())
             .then(json => this.setState({
                 carData: json,
