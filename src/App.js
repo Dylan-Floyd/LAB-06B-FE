@@ -9,6 +9,7 @@ import CarList from './CarList.js';
 import Home from './Home.js';
 import CarDetails from './CarDetails.js';
 import './App.css';
+import SellPage from './SellPage.js';
 
 export default function App() {
     return (
@@ -22,6 +23,9 @@ export default function App() {
                         <li>
                             <Link to="/cars">Cars</Link>
                         </li>
+                        <li>
+                            <Link to="/sell">Sell Your Car</Link>
+                        </li>
                     </ul>
                 </nav>
 
@@ -32,9 +36,14 @@ export default function App() {
                         exact
                         render={(routerProps) => <CarDetails {...routerProps} />}
                     />
-                    <Route path="/cars">
-                        <CarList />
-                    </Route>
+                    <Route path="/cars"
+                        exact
+                        render={(routerProps) => <CarList {...routerProps} />}
+                    />
+                    <Route path="/sell/"
+                        exact
+                        render={(routerProps) => <SellPage {...routerProps} />}
+                    />
                     <Route path="/">
                         <Home />
                     </Route>

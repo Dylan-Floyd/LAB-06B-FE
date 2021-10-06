@@ -3,11 +3,8 @@ import Car from './Car.js';
 
 export default class CarList extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            cars: []
-        }
+    state = {
+        cars: []
     }
 
     componentDidMount = () => {
@@ -20,9 +17,9 @@ export default class CarList extends Component {
     render() {
         return (
             <div className="App">
-                Worlds Worst Car Buying App:
+                Here be our cars:
                 <div className="car-list-div">
-                    { this.state.cars.map(car => <Car {...car} />) }
+                    { this.state.cars.map(car => <Car inList={true} {...car} />) }
                 </div>
             </div>
         )
