@@ -44,11 +44,21 @@
   display: inline-block;
 }
 
+.car-div > img {
+  width: 400px;
+  display: block;
+}
+
 .car-list-div {
   display: flex;
   flex-direction: column;
 }
 
 .sell-form > label {
+  display: block;
+}
+
+.sell-form > img {
+  width: 400px;
   display: block;
 }

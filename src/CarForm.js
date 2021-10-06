@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { getCategories } from './fetch-utils.js';
+import CategorySelect from './CategorySelect.js';
+import { getCategories, uploadImg } from './fetch-utils.js';
 
 export default class CarForm extends Component {
 
@@ -9,10 +10,11 @@ export default class CarForm extends Component {
         const {
             make,
             model,
-            yearReleased: releaseYear,
+            releaseYear,
             stillProduced,
             energyType,
-            category_id
+            category_id,
+            img
         } = props;
 
         this.state = {
@@ -22,12 +24,13 @@ export default class CarForm extends Component {
             releaseYear: releaseYear || 1900,
             stillProduced: stillProduced || false,
             energyType: energyType || "gas",
-            category_id: category_id || 1
+            category_id: category_id || 1,
+            img: img || ''
         }
     }
     
     componentDidMount = async () => {
-        const categories =  await getCategories();
+        const categories = await getCategories();
 
         this.setState({ categories: categories })
     }
@@ -35,9 +38,12 @@ export default class CarForm extends Component {
     handleSubmit = async e => {
         e.preventDefault();
 
+        //create an object that only has the form data.
         let carData = Object.assign({}, this.state);
         delete carData.categories;
+        delete carData.imageFile;
 
+        //pass it up to the parent component.
         this.props.handleSubmit(carData);
     }
 
@@ -54,6 +60,11 @@ export default class CarForm extends Component {
         this.setState({ [e.target.name]: value });
     }
 
+    handleImageChange = async (e) => {
+        const newUrl = await uploadImg(e.target.files[0]);
+        this.setState({ img: newUrl });
+    }
+
     render() {
         const {
             make,
@@ -61,43 +72,53 @@ export default class CarForm extends Component {
             releaseYear,
             stillProduced,
             energyType,
-            category_id
+            category_id,
+            img
         } = this.state;
 
         return (
             <div>
                 <form onSubmit={this.handleSubmit} className="sell-form">
-                    <label for="make">
+                    <label htmlFor="make">
                         Make: 
                         <input type="text" name="make" value={make} onChange={this.handleInputChange} />
                     </label>
                     
-                    <label for="model">
+                    <label htmlFor="model">
                         Model: 
                         <input type="text" name="model" value={model} onChange={this.handleInputChange} />
                     </label>
                     
-                    <label for="yearReleased">
+                    <label htmlFor="yearReleased">
                         Year Released: 
                         <input type="number" name="yearReleased" value={releaseYear} onChange={this.handleInputChange} />
                     </label>
                     
-                    <label for="stillProduced">
+                    <label htmlFor="stillProduced">
                         Still Produced: 
                         <input type="checkbox" name="stillProduced" value={stillProduced} onChange={this.handleInputChange} />
                     </label>
                     
-                    <label for="energyType">
+                    <label htmlFor="energyType">
                         Energy Type: 
                         <input type="text" name="energyType" value={energyType} onChange={this.handleInputChange} />
                     </label>
                     
-                    <label for="category_id">
+                    <CategorySelect handleChange={this.handleInputChange} category_id={category_id}/>
+
+                    <label htmlFor="image">
+                        Select Image:
+                        <input type="file" onChange={ this.handleImageChange } />
+                    </label>
+                    <img src={img} alt="" />
+                    {/*
+                    <label htmlFor="category_id">
                         Category:
                         <select name="category_id" value={category_id} onChange={this.handleInputChange}>
-                            {this.state.categories.map(category => <option value={category.id}>{category.name}</option>)}
+                            {this.state.categories.map(category => <option value={category.id} key={category.id}>{category.name}</option>)}
                         </select>
                     </label>
+                    */}
 
                     <input type="submit" value="Submit"></input>
                 </form>

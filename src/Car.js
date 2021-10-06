@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import CarForm from './CarForm.js'
-import { deletecar, putCar } from './fetch-utils.js'
+import { deleteCar, putCar } from './fetch-utils.js'
 
 class Car extends Component {
 
@@ -28,7 +28,7 @@ class Car extends Component {
     }
 
     handleDelete = async () => {
-        await deletecar(this.props.id);
+        await deleteCar(this.props.id);
         this.props.history.push('/cars');
     }
 
@@ -46,6 +46,7 @@ class Car extends Component {
                 <p>Still Being Produced: {this.props.stillProduced ? "yes" : "no"}</p>
                 <p>Energy Type: {this.props.energyType}</p>
                 <p>Category: {this.props.category}</p>
+                <img src={this.props.img} alt=""/>
                 <button onClick={this.handleClick}> {this.props.inList ? "Details" : "Edit"} </button>
                 <button disabled={true}>Buy</button>
                 {this.props.inList ? <></> : <button onClick={this.handleDelete}>Delete</button> }
