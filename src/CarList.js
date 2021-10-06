@@ -1,28 +1,34 @@
 import React, { Component } from 'react';
 import Car from './Car.js';
+import CategorySelect from './CategorySelect.js';
+import { getCars } from './fetch-utils.js';
 
 export default class CarList extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            cars: []
-        }
+    state = {
+        cars: [],
+        category_id: -1
     }
 
-    componentDidMount = () => {
-        fetch('https://lab-06b-be-dylan.herokuapp.com/cars/')
-            .then(response => response.json())
-            .then(json => this.setState({ cars: json }))
-            .catch(e => console.log(e));
+    componentDidMount = async () => {
+        let cars = await getCars();
+        this.setState({cars: cars});
+    }
+
+    handleSelectChange = (e) => {
+        this.setState({ category_id: Number(e.target.value) });
     }
 
     render() {
+        const { category_id } = this.state;
+        const filteredCars = this.state.cars.filter(car => category_id < 0 || car.category_id === category_id);
         return (
             <div className="App">
-                Worlds Worst Car Buying App:
+                Here be our cars:
+                <hr />
+                <CategorySelect handleChange={this.handleSelectChange} showAny={true} category_id={this.state.category_id}/>
                 <div className="car-list-div">
-                    { this.state.cars.map(car => <Car {...car} />) }
+                    { filteredCars.map(car => <Car inList={true} {...car} key={car.id}/>) }
                 </div>
             </div>
         )

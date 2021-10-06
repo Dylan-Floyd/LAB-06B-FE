@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Car from './Car.js';
+import { getCarById } from './fetch-utils.js';
 
 export default class CarDetails extends Component {
 
@@ -12,13 +13,12 @@ export default class CarDetails extends Component {
     }
 
     componentDidMount = () => {
-        fetch('https://lab-06b-be-dylan.herokuapp.com/cars/'+this.props.match.params.id)
-            .then(response => response.json())
-            .then(json => this.setState({
-                carData: json,
-                loaded: true
-            }))
-            .catch(e => console.log(e));
+        this.setState({loaded: false});
+        const carData = getCarById(this.props.match.params.id);
+        this.setState({
+            carData: carData,
+            loaded: true
+        })
     }
 
     render() {
