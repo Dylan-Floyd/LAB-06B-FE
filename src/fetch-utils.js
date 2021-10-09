@@ -11,7 +11,7 @@ export async function getCars() {
 
 export async function getCarById(id) {
     let carData = null;
-    fetch('https://lab-06b-be-dylan.herokuapp.com/cars/'+id)
+    await fetch('https://lab-06b-be-dylan.herokuapp.com/cars/'+id)
         .then(response => response.json())
         .then(json => carData = json)
         .catch(e => console.log(e));

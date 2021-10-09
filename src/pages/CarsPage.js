@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Car from './Car.js';
-import CategorySelect from './CategorySelect.js';
-import { getCars } from './fetch-utils.js';
+import Car from '../components/Car.js';
+import CategorySelect from '../components/CategorySelect.js';
+import { getCars } from '../fetch-utils.js';
 
-export default class CarList extends Component {
+export default class CarsPage extends Component {
 
     state = {
         cars: [],
@@ -24,8 +24,6 @@ export default class CarList extends Component {
         const filteredCars = this.state.cars.filter(car => category_id < 0 || car.category_id === category_id);
         return (
             <div className="App">
-                Here be our cars:
-                <hr />
                 <CategorySelect handleChange={this.handleSelectChange} showAny={true} category_id={this.state.category_id}/>
                 <div className="car-list-div">
                     { filteredCars.map(car => <Car inList={true} {...car} key={car.id}/>) }
