@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Car from './Car.js';
-import { getCarById } from './fetch-utils.js';
+import Car from '../components/Car.js';
+import { getCarById } from '../fetch-utils.js';
 
 export default class CarDetails extends Component {
 
@@ -12,9 +12,9 @@ export default class CarDetails extends Component {
         }
     }
 
-    componentDidMount = () => {
+    componentDidMount = async () => {
         this.setState({loaded: false});
-        const carData = getCarById(this.props.match.params.id);
+        const carData = await getCarById(this.props.match.params.id);
         this.setState({
             carData: carData,
             loaded: true
@@ -30,7 +30,7 @@ export default class CarDetails extends Component {
         //not loaded:
         return (
             <div>
-                hmm this terrible car buying app isn't working, my condolences.
+                Loading...
             </div>
         )
     }
